@@ -44,6 +44,20 @@ class Dashboard:
                         )
                     ]
                 ),
+                #para que en la pagina se pueda ver la vista de las ventas por proovedor
+                html.Br(),
+                html.Div(
+                    [
+                        dbc.Row(
+                            [
+                                dbc.Col(
+                                    self._bar_chart_sales_per_provider(),
+                                    width=12
+                                ),
+                            ]
+                        )
+                    ]
+                ),
                 html.Br(),
                 html.Div(
                     [
@@ -308,5 +322,23 @@ class Dashboard:
                         )
                     ]
                 )
+            ]
+        )
+    
+    #Se crea la vista para las ventas por proovedor
+    def _bar_chart_sales_per_provider(self):
+        data = DashboardController.load_sales_per_provider()
+        bar_char_fig = px.bar(data, x="provider", y="sales")
+        return dbc.Card(
+            [
+                dbc.CardBody(
+                    [
+                        html.H3("Sales per provider", className="card-title"),
+                        dcc.Graph(
+                            id='sales-per-provider',
+                            figure=bar_char_fig
+                        ),
+                    ]
+                ),
             ]
         )
