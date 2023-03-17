@@ -70,9 +70,3 @@ class Repository:
     def get_most_selled_products():
         response = Provider.execute(Queries.get_most_selled_products())
         return response
-    
-    #repositorio del controlador load_sales_per_provider()
-    @staticmethod
-    def get_sales_per_provider():
-        response = Provider.execute(Queries.get_sales_per_provider())
-        return response
