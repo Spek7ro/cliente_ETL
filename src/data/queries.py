@@ -66,6 +66,28 @@ class Queries:
                 }
             }
         """
+    
+#query que filtra los datos de las ventas hechas por los clientes para que se muestren solamente
+#los que estan entre dos fechas o periodos especificados 
+#ej 2023-01-01T00:00:00Z o solo 2023-01-01 el primero permite tambien especificar la hora
+
+    @staticmethod
+    def get_total_sales_date(start_period, end_period):
+        return f"""
+            {{
+                var(func: has(date)) @filter(ge(date, "{start_period}") AND le(date, "{end_period}")) {{
+                    t as total
+                }}
+                response() {{
+                    total: sum(val(t))
+                }}
+            }}
+    """
+
+
+#esto jala
+#{ var(func: ge(date, "2000-01-01")) { t as total }
+#response() { total: sum(val(t)) } }
 
     @staticmethod
     def get_providers_per_location():
@@ -95,6 +117,8 @@ class Queries:
                 }
             }
         """
+    
+
 
     @staticmethod
     def get_orders_per_location():

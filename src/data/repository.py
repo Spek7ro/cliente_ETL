@@ -40,6 +40,12 @@ class Repository:
     def get_sales():
         response = Provider.execute(Queries.get_total_sales())
         return response
+    
+    #obtiene el query que obtiene los datos sobre fechas especificas
+    @staticmethod
+    def get_sales_by_date(start_period, end_period):
+        response = Provider.execute(Queries.get_total_sales_date(start_period, end_period))
+        return response
 
     @staticmethod
     def get_providers_by_location():
@@ -50,6 +56,8 @@ class Repository:
     def get_sales_by_location():
         response = Provider.execute(Queries.get_sales_per_location())
         return response
+    
+
 
     @staticmethod
     def get_orders_by_location():

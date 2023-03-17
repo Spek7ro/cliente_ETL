@@ -90,6 +90,22 @@ class DashboardController:
             "sales": json_response["data"]["response"][0]["total"]
         }
 
+    #manda al repositorio dos fechas para que obtenga los datos entre dos fechas
+    @staticmethod
+    def load_sales_date(start_period,end_period):
+        response = Repository.get_sales_by_date(start_period,end_period)
+        if response.status_code != 200:
+            return {"sales": 0}
+        
+        json_response = json.loads(response.text)
+        
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        return {
+            "sales": json_response["data"]["response"][0]["total"]
+        }
+
     @staticmethod
     def load_providers_per_location():
         response = Repository.get_providers_by_location()
@@ -139,6 +155,8 @@ class DashboardController:
             result["sales"].append(total)
             
         return result
+    
+    
 
     @staticmethod
     def load_orders_per_location():
