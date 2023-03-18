@@ -218,3 +218,22 @@ class DashboardController:
                 "times": product["times"]
             })
         return result
+    #Método que recorre el json creado por la consulta y 
+    # agrega a una lista los productos y las veces que se ha vendido
+    @staticmethod
+    def load_most_selled_products_by_date():
+        response = Repository.get_most_selled_products_by_date()
+        if response.status_code != 200:
+            return []
+        result = []
+        json_response = json.loads(response.text)
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        for product in json_response["data"]["response"][0:5]:
+            result.append({
+                "product": product["description"],
+                "times": product["times"]
+            })
+        return result

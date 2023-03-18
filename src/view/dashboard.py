@@ -96,6 +96,10 @@ class Dashboard:
                                     self._panel_most_selled_products(),
                                     width=12
                                 ),
+                                dbc.Col(
+                                    self._panel_most_selled_products_by_date(),
+                                    width=12
+                                ),
                             ]
                         )
                     ]
@@ -288,6 +292,39 @@ class Dashboard:
                         dbc.CardBody(
                             [
                                 html.H3("Most selled", className="card-title"),
+                                html.Br(),
+                                html.Div(
+                                    [
+                                        html.Div(
+                                            [
+                                                dbc.Row(
+                                                    [
+                                                        html.H5(f"- {product['product']} [{product['times']} time(s) sold]", style={"font-weight":"bold"}),
+                                                    ]
+                                                ),
+                                            ]
+                                        )
+
+                                        for product in most_selled
+                                    ]
+                                )
+                            ]
+                        )
+                    ]
+                )
+            ]
+        )
+        
+    def _panel_most_selled_products_by_date(self):
+        
+        most_selled = DashboardController.load_most_selled_products_by_date()
+        return html.Div(
+            [
+                dbc.Card(
+                    [
+                        dbc.CardBody(
+                            [
+                                html.H3("Most selled by date", className="card-title"),
                                 html.Br(),
                                 html.Div(
                                     [

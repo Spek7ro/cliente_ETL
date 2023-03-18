@@ -155,3 +155,21 @@ class Queries:
                 }
             }
         """
+    #Consulta que devuelve la decripcion de un producto y las veces que se ha vendido, 
+    #   filtrado por un periodo especifico
+    @staticmethod
+    def get_most_selled_products_by_date():
+        return """
+            {
+                var(func: has(date))@filter(ge(date, "2023-01-01T00:00:00Z") AND le(date, "2023-01-31T23:59:59Z")) {
+                    product: ~bought{
+                        c as count(bought)
+                    } 
+                }
+                
+                response(func: has(description), orderasc: val(c))  {
+                    description
+                    times: val(c)
+                }
+            }
+        """
