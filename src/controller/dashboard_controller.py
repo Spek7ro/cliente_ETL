@@ -248,3 +248,36 @@ class DashboardController:
             result["sales"].append(total)
 
         return result
+    
+
+    #manda al repositorio dos fechas para que obtenga los datos de las ventas hechas entre dos fechas
+    @staticmethod
+    def load_sales_date(start_period,end_period):
+        response = Repository.get_sales_by_date(start_period,end_period)
+        if response.status_code != 200:
+            return {"sales": 0}
+        
+        json_response = json.loads(response.text)
+        
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        return {
+            "sales": json_response["data"]["response"][0]["total"]
+        }
+    
+    #manda al repositorio dos fechas para que obtenga los datos de las ordenes hechas entre dos fechas
+    @staticmethod
+    def load_orders_date(start_period,end_period):
+        response = Repository.get_orders_by_date(start_period,end_period)
+        if response.status_code != 200:
+            return {"orders": 0}
+        
+        json_response = json.loads(response.text)
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+
+        return {
+            "orders": json_response["data"]["response"][0]["count"]
+        }

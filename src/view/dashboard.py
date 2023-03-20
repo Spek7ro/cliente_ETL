@@ -14,7 +14,7 @@
 from src.controller.dashboard_controller import DashboardController
 import dash_bootstrap_components as dbc
 import plotly.express as px
-from dash import dcc, html
+from dash import Dash, dcc, html, Input, Output, State
 
 class Dashboard:
 
@@ -31,6 +31,20 @@ class Dashboard:
                 self._header_subtitle("Sales summary financial report"),
                 html.Br(),
                 self._highlights_cards(),
+                html.Br(),
+                self._header_subtitle2("Sales financial reportes by date"),
+                html.Br(),
+                #los botones
+                html.Div(
+                    [
+                        html.Div(dcc.Input(id='input-start-period', type='text', placeholder='Enter start period')),
+                        html.Div(dcc.Input(id='input-end-period', type='text', placeholder='Enter end period')),
+                        html.Button('Submit', id='submit-val', n_clicks=0),
+                        html.Div(id='container-button-basic', children='')
+                    ]
+                ),
+                html.Br(),
+                self.sales_by_date(),
                 html.Br(),
                 html.Div(
                     [
@@ -135,6 +149,17 @@ class Dashboard:
             ],
             id="blurb",
         )
+    
+    def _header_subtitle2(self, subtitle):
+        return html.Div(
+            [
+                html.P(
+                    subtitle,
+                    className="lead",
+                ),
+            ],
+            id="blurb2",
+        )
 
     def _card_value(self, label, value):
         return dbc.Card(
@@ -169,6 +194,39 @@ class Dashboard:
                         ),
                         dbc.Col(
                             self._card_value("Locations", locations["locations"])
+                        ),
+                        dbc.Col(
+                            self._card_value("Sales", "$ {:,.2f}".format(float(sales['sales'])))
+                        ),
+                    ]
+                ),
+            ]
+        )
+    
+    #da error tambien :(
+    #app.callback de prueba
+    # @app.callback(
+    #     Output('container-button-basic', 'children'),
+    #     Input('submit-val', 'n_clicks'),
+    #     State('input-start-period', 'value'),
+    #     State('input-end-period', 'value'))
+    # def update_output(n_clicks, start_period, end_period):
+    #     # codigo que solo imprime los strings 
+    #     return f'resionaste {start_period} y {end_period}'
+
+    #aqui deberia estar el @app.callback pero da errors
+    #esta clase muestra en pantalla las ventas hechas en un periodo especifico
+    def sales_by_date(self):
+        #cambia las fechas para obtener diferentes resultados
+        #deberia estar start_period y end_period como parametros
+        sales = DashboardController.load_sales_date("2023-01-01","2023-01-20")
+        orders = DashboardController.load_orders_date("2023-01-01","2023-01-20")
+        return html.Div(
+            [
+                dbc.Row(
+                    [
+                        dbc.Col(
+                            self._card_value("Orders", orders["orders"])
                         ),
                         dbc.Col(
                             self._card_value("Sales", "$ {:,.2f}".format(float(sales['sales'])))
