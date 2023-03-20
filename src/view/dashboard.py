@@ -58,20 +58,6 @@ class Dashboard:
                         )
                     ]
                 ),
-                #para que en la pagina se pueda ver la vista de las ventas por proovedor
-                html.Br(),
-                html.Div(
-                    [
-                        dbc.Row(
-                            [
-                                dbc.Col(
-                                    self._bar_chart_sales_per_provider(),
-                                    width=12
-                                ),
-                            ]
-                        )
-                    ]
-                ),
                 html.Br(),
                 html.Div(
                     [
@@ -122,6 +108,10 @@ class Dashboard:
                             [
                                 dbc.Col(
                                     self._panel_most_selled_products(),
+                                    width=12
+                                ),
+                                dbc.Col(
+                                    self._panel_most_selled_products_by_date(),
                                     width=12
                                 ),
                             ]
@@ -203,17 +193,6 @@ class Dashboard:
             ]
         )
     
-    #da error tambien :(
-    #app.callback de prueba
-    # @app.callback(
-    #     Output('container-button-basic', 'children'),
-    #     Input('submit-val', 'n_clicks'),
-    #     State('input-start-period', 'value'),
-    #     State('input-end-period', 'value'))
-    # def update_output(n_clicks, start_period, end_period):
-    #     # codigo que solo imprime los strings 
-    #     return f'resionaste {start_period} y {end_period}'
-
     #aqui deberia estar el @app.callback pero da errors
     #esta clase muestra en pantalla las ventas hechas en un periodo especifico
     def sales_by_date(self):
@@ -382,21 +361,36 @@ class Dashboard:
                 )
             ]
         )
-    
-    #Se crea la vista para las ventas por proovedor
-    def _bar_chart_sales_per_provider(self):
-        data = DashboardController.load_sales_per_provider()
-        bar_char_fig = px.bar(data, x="provider", y="sales")
-        return dbc.Card(
+        
+    def _panel_most_selled_products_by_date(self):
+        
+        most_selled = DashboardController.load_most_selled_products_by_date()
+        return html.Div(
             [
-                dbc.CardBody(
+                dbc.Card(
                     [
-                        html.H3("Sales per provider", className="card-title"),
-                        dcc.Graph(
-                            id='sales-per-provider',
-                            figure=bar_char_fig
-                        ),
+                        dbc.CardBody(
+                            [
+                                html.H3("Most selled by date", className="card-title"),
+                                html.Br(),
+                                html.Div(
+                                    [
+                                        html.Div(
+                                            [
+                                                dbc.Row(
+                                                    [
+                                                        html.H5(f"- {product['product']} [{product['times']} time(s) sold]", style={"font-weight":"bold"}),
+                                                    ]
+                                                ),
+                                            ]
+                                        )
+
+                                        for product in most_selled
+                                    ]
+                                )
+                            ]
+                        )
                     ]
-                ),
+                )
             ]
         )

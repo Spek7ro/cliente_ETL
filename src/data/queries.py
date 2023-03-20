@@ -161,23 +161,24 @@ class Queries:
                 }
             }
         """
-        
-    #Este query busca todos los proveedores que tienen un ID de proveedor (pid) 
-    # y obtiene la información de ventas de cada uno de ellos. La información de ventas 
-    # incluye el precio y la cantidad de artículos comprados para cada venta.
+    #Consulta que devuelve la decripcion de un producto y las veces que se ha vendido, 
+    #   filtrado por un periodo especifico
     @staticmethod
-    def get_sales_per_provider():
+    def get_most_selled_products_by_date():
         return """
             {
-                response(func: has(pid)){
-                    pid
-                    sold: ~sold {
-                        price
-                        quantity: count(bought)
-                    }
+                var(func: has(date))@filter(ge(date, "2023-01-01T00:00:00Z") AND le(date, "2023-01-31T23:59:59Z")) {
+                    product: ~bought{
+                        c as count(bought)
+                    } 
+                }
+                
+                response(func: has(description), orderasc: val(c))  {
+                    description
+                    times: val(c)
                 }
             }
-        """    
+        """
     
     #query que filtra los datos de las ventas hechas por los clientes para que se muestren solamente
     #los que estan entre dos fechas o periodos especificados 

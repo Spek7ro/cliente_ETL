@@ -71,10 +71,9 @@ class Repository:
         response = Provider.execute(Queries.get_most_selled_products())
         return response
     
-    #repositorio del controlador load_sales_per_provider()
     @staticmethod
-    def get_sales_per_provider():
-        response = Provider.execute(Queries.get_sales_per_provider())
+    def get_most_selled_products_by_date():
+        response = Provider.execute(Queries.get_most_selled_products_by_date())
         return response
     
     #obtiene el query que obtiene los datos sobre fechas especificas
@@ -87,3 +86,5 @@ class Repository:
     def get_orders_by_date(start_period, end_period):
         response = Provider.execute(Queries.get_total_orders_date(start_period, end_period))
         return response
+    
+   

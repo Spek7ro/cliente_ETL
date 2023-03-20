@@ -218,35 +218,24 @@ class DashboardController:
                 "times": product["times"]
             })
         return result
-    
-    #Se utiliza el bucle for sold in entry["providers"]: para recorrer la lista de proveedores
-    # de cada ubicación y se calcula la suma total de las ventas de cada proveedor dentro de este bucle.
-    # Se almacena el total de ventas en una lista de resultados junto con el ID del proveedor correspondiente. 
-    # Finalmente, se devuelve el diccionario result que contiene los totales de ventas por proveedor y su respectivo ID.
+    #Método que recorre el json creado por la consulta y 
+    # agrega a una lista los productos y las veces que se ha vendido
     @staticmethod
-    def load_sales_per_provider():
-        response = Repository.get_sales_per_provider()
+    def load_most_selled_products_by_date():
+        response = Repository.get_most_selled_products_by_date()
         if response.status_code != 200:
-            return {
-                "sales": [],
-                "provider": []
-            }
-        result = {
-            "sales": [],
-            "provider": []
-        }
+            return []
+        result = []
         json_response = json.loads(response.text)
 
         assert('data' in json_response.keys())
         assert('response' in json_response['data'].keys())
 
-        for entry in json_response["data"]["response"]:
-            result["provider"].append(entry["pid"])
-            total = 0
-            for sold in entry["sold"]:
-                total += (int(sold["quantity"]) * float(sold["price"]))
-            result["sales"].append(total)
-
+        for product in json_response["data"]["response"][0:5]:
+            result.append({
+                "product": product["description"],
+                "times": product["times"]
+            })
         return result
     
 
@@ -281,3 +270,4 @@ class DashboardController:
         return {
             "orders": json_response["data"]["response"][0]["count"]
         }
+        

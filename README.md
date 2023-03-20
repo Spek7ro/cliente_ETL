@@ -53,13 +53,16 @@ desde un navegador, accede a la url `http://localhost:5000` para visualizar el r
 
 ## Versión
 
-v1.0.0 - Noviembre 2022
+v2.0.0 - Marzo 2023
 
 ## Autores
 
-- Perla Velasco
-- Yonathan Martinez
-- Jorge Solis
+- Cristian Omar Alvarado Rodríguez.
+- Osmar Armando Loera Ortiz
+- Paul Alejandro Santana Guzmán
+- Carlos Eduardo Olvera Mayorga 
+- Roberto Pacheco Mendoza
+
 
 # Preguntas Frecuentes
 
