@@ -167,13 +167,13 @@ class Queries:
     def get_most_selled_products_by_date():
         return """
             {
-                var(func: has(date))@filter(ge(date, "2023-01-01T00:00:00Z") AND le(date, "2023-01-31T23:59:59Z")) {
+                var(func: has(date))@filter(ge(date, "2023-01-01") AND le(date, "2023-01-20")) {
                     product: ~bought{
                         c as count(bought)
                     } 
                 }
                 
-                response(func: has(description), orderasc: val(c))  {
+                response(func: has(description), orderdesc: val(c))  {
                     description
                     times: val(c)
                 }

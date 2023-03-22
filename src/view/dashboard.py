@@ -365,7 +365,6 @@ class Dashboard:
         )
         
     def _panel_most_selled_products_by_date(self):
-        
         most_selled = DashboardController.load_most_selled_products_by_date()
         return html.Div(
             [
@@ -373,7 +372,7 @@ class Dashboard:
                     [
                         dbc.CardBody(
                             [
-                                html.H3("Most selled by date", className="card-title"),
+                                html.H3("Most selled by date (2023-01-01, 2023-01-20)", className="card-title"),
                                 html.Br(),
                                 html.Div(
                                     [
