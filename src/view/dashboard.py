@@ -363,9 +363,10 @@ class Dashboard:
                 )
             ]
         )
-        
+    #Metodo que muesta un panel con los 5 productos mas vendidos en un peridodo especifico
     def _panel_most_selled_products_by_date(self):
-        most_selled = DashboardController.load_most_selled_products_by_date()
+        #Recibe como parametro las fechas del periodo
+        most_selled = DashboardController.load_most_selled_products_by_date("2023-01-01","2023-01-20")
         return html.Div(
             [
                 dbc.Card(
