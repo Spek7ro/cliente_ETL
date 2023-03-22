@@ -32,7 +32,7 @@ class Dashboard:
                 html.Br(),
                 self._highlights_cards(),
                 html.Br(),
-                self._header_subtitle2("Sales financial reportes by date"),
+                self._header_subtitle2("Sales financial reportes by date (2023-01-01 - 2023-01-20)"),
                 html.Br(),
                 #los botones
                 html.Div(
