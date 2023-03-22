@@ -239,7 +239,7 @@ class DashboardController:
         return result
     
 
-    #manda al repositorio dos fechas para que obtenga los datos de las ventas hechas entre dos fechas
+    #manda al repositorio dos fechas para que obtenga los datos de las ventas hechas entre dos fechas rpm
     @staticmethod
     def load_sales_date(start_period,end_period):
         response = Repository.get_sales_by_date(start_period,end_period)
@@ -255,7 +255,7 @@ class DashboardController:
             "sales": json_response["data"]["response"][0]["total"]
         }
     
-    #manda al repositorio dos fechas para que obtenga los datos de las ordenes hechas entre dos fechas
+    #manda al repositorio dos fechas para que obtenga los datos de las ordenes hechas entre dos fechas rpm
     @staticmethod
     def load_orders_date(start_period,end_period):
         response = Repository.get_orders_by_date(start_period,end_period)

@@ -46,6 +46,7 @@ class Dashboard:
                 html.Br(),
                 self.sales_by_date(),
                 html.Br(),
+                #desde los botones hasta aqui esta lo de las fechas rpm
                 html.Div(
                     [
                         dbc.Row(
@@ -140,6 +141,7 @@ class Dashboard:
             id="blurb",
         )
     
+    #subtitulo delas fechas rpm
     def _header_subtitle2(self, subtitle):
         return html.Div(
             [
@@ -193,8 +195,8 @@ class Dashboard:
             ]
         )
     
-    #aqui deberia estar el @app.callback pero da errors
-    #esta clase muestra en pantalla las ventas hechas en un periodo especifico
+    #aqui deberia estar el @app.callback pero da errores
+    #esta clase muestra en pantalla las ventas hechas en un periodo especifico rpm
     def sales_by_date(self):
         #cambia las fechas para obtener diferentes resultados
         #deberia estar start_period y end_period como parametros

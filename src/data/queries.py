@@ -182,7 +182,7 @@ class Queries:
     
     #query que filtra los datos de las ventas hechas por los clientes para que se muestren solamente
     #los que estan entre dos fechas o periodos especificados 
-    #ej 2023-01-01T00:00:00Z o solo 2023-01-01 el primero permite tambien especificar la hora
+    #ej 2023-01-01T00:00:00Z o solo 2023-01-01 el primero permite tambien especificar la hora rpm
 
     @staticmethod
     def get_total_sales_date(start_period, end_period):
@@ -199,7 +199,7 @@ class Queries:
     
     #query que filtra los datos de las ordenes hechas por los clientes para que se muestren solamente
     #los que estan entre dos fechas o periodos especificados 
-    #ej 2023-01-01T00:00:00Z o solo 2023-01-01 el primero permite tambien especificar la hora
+    #ej 2023-01-01T00:00:00Z o solo 2023-01-01 el primero permite tambien especificar la hora rpm
     @staticmethod
     def get_total_orders_date(start_period, end_period):
         return f"""
