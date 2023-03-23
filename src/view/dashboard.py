@@ -93,15 +93,37 @@ class Dashboard:
                         )
                     ]
                 ),
-                #para que en la pagina se pueda ver la vista de las ventas por proovedor
+                #para que en la pagina se pueda ver la vista de las ventas por proovedor-----------------------------------------------
                 html.Br(),
+                self._header_subtitle2("Ventas por proveedor en una fecha dada:",'id-titulo-grafica'),
+                html.Div([
+                        "Selecciona una fecha de inicio: ",
+                         
+                         dcc.DatePickerSingle(#input de tip date para elegir la fecha
+                            id='input-date-ventas-proveedor-1',
+                            min_date_allowed=date(1995, 8, 5),
+                            initial_visible_month=date(2020, 8, 5),
+                            placeholder='Fecha Inicio',
+                            clearable=True,
+                        ),
+                        " Selecciona una fecha final: ",
+                         
+                         dcc.DatePickerSingle(#input de tip date para elegir la fecha
+                            id='input-date-ventas-proveedor-2',
+                            min_date_allowed=date(1995, 8, 5),
+                            initial_visible_month=date(2020, 8, 6),
+                            placeholder='Fecha Fin',
+                            clearable=True,
+                        ),
+                ]),
                 html.Div(
                     [
                         dbc.Row(
                             [
                                 dbc.Col(
-                                    self._bar_chart_sales_per_provider(),
-                                    width=12
+                                    #self._bar_chart_sales_per_provider(),
+                                    width=12,
+                                    id='grafica-ventas-proveedor'
                                 ),
                             ]
                         )
@@ -505,14 +527,14 @@ class Dashboard:
         )
     
     #Se crea la vista para las ventas por proovedor
-    def _bar_chart_sales_per_provider(self):
-        data = DashboardController.load_sales_per_provider("2023-01-01","2023-01-20")
+    def _bar_chart_sales_per_provider(self,fecha1,fecha2):
+        data = DashboardController.load_sales_per_provider(fecha1,fecha2)
         bar_char_fig = px.bar(data, x="provider", y="sales")
         return dbc.Card(
             [
                 dbc.CardBody(
                     [
-                        html.H3("Sales per provider by date (2023-01-01, 2023-01-20)", className="card-title"),
+                        html.H3("Sales per provider by date ("+fecha1+", "+fecha2+")", className="card-title"),
                         dcc.Graph(
                             id='sales-per-provider',
                             figure=bar_char_fig

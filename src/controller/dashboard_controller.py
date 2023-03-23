@@ -247,6 +247,7 @@ class DashboardController:
             return []
         result = []
         json_response = json.loads(response.text)
+        
 
         assert('data' in json_response.keys())
         assert('response' in json_response['data'].keys())
@@ -254,7 +255,7 @@ class DashboardController:
         for product in json_response["data"]["response"][0:5]:
             result.append({
                 "product": product["description"],
-                "times": product["times"]
+                "times": '0' if 'times' not in product else product['times']# se compara si existe el campo times en el json si no existe entonces regresamos 0
             })
         return result
     

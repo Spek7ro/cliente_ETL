@@ -18,6 +18,7 @@ from dash import Dash, dcc, html, Input, Output, State
 
 from dash import Output, Input
 from src.controller.dashboard_controller import DashboardController
+import plotly.express as px
 
 app = dash.Dash(
     external_stylesheets=[dbc.themes.LUX],
@@ -68,8 +69,6 @@ def update_count_product(input1,input2):
 def update_list_most(input1,input2):
     if input1 is not None and input2 is not None:
         most_selled = DashboardController.load_most_selled_products_by_date(input1,input2)
-        if most_selled is None:
-            return None
         return html.Div(
             [
                 dbc.Card(
@@ -97,6 +96,33 @@ def update_list_most(input1,input2):
                         )
                     ]
                 )
+            ]
+        )
+    return None
+
+
+
+#callback para manejar la seleccion de fechas para obtener los productos mas vendidos en dicha fecha
+@app.callback(
+    Output('grafica-ventas-proveedor','children'),#tomamos la salida (lo que se va a hacer apartir de la llamada)
+    Input('input-date-ventas-proveedor-1', 'date'),#tomamos la entrada de info
+    Input('input-date-ventas-proveedor-2', 'date')#tomamos la entrada de info
+)
+def update_graph_providers(input1,input2):
+    if input1 is not None and input2 is not None:
+        data = DashboardController.load_sales_per_provider(input1,input2)
+        bar_char_fig = px.bar(data, x="provider", y="sales")
+        return dbc.Card(
+            [
+                dbc.CardBody(
+                    [
+                        html.H3("Sales per provider by date ("+input1+", "+input2+")", className="card-title"),
+                        dcc.Graph(
+                            id='sales-per-provider',
+                            figure=bar_char_fig
+                        ),
+                    ]
+                ),
             ]
         )
     return None
