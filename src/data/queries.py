@@ -209,3 +209,20 @@ class Queries:
                 }}
             }}
         """
+    
+    #Este query busca todos los proveedores que tienen un ID de proveedor (pid) 
+    # y obtiene la información de ventas de cada uno de ellos. La información de ventas 
+    # incluye el precio y la cantidad de artículos comprados para cada venta.
+    @staticmethod
+    def get_sales_per_provider(start_period, end_period):
+        return f"""
+            {{
+                response(func: has(pid)){{
+                    pid
+                    sold: ~sold {{
+                        price
+                        quantity: count(bought)@filter(between(date, "{start_period}", "{end_period}"))
+                    }}
+                }}
+            }}
+        """

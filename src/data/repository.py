@@ -88,4 +88,10 @@ class Repository:
         response = Provider.execute(Queries.get_total_orders_date(start_period, end_period))
         return response
     
+    #repositorio del controlador load_sales_per_provider()
+    @staticmethod
+    def get_sales_per_provider(start_period, end_period):
+        response = Provider.execute(Queries.get_sales_per_provider(start_period, end_period))
+        return response
+    
    
