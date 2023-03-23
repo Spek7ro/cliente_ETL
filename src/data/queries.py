@@ -13,6 +13,23 @@
 #-------------------------------------------------------------------------
 class Queries:
 
+
+    #Esta consulta obtiene el numero de productos vendidos de una fecha dada (Fecha inicio Fecha fin)
+    @staticmethod
+    def get_cantidad_productos_vendidos_por_fecha(start_period, end_period):
+        return """
+            {
+                var(func: has(invoice)) @filter(between(date, "%s", "%s")) {
+                    t as quantity
+                }
+                response() {
+                    count: sum(val(t))
+                }
+            }
+        """%(start_period, end_period)
+    
+    #-------------------------------------------------------------------------
+
     @staticmethod
     def get_total_products():
         return """

@@ -15,6 +15,26 @@ import json
 
 class DashboardController:
 
+    #este metodo regresa la cantidad de productos vendidos
+    @staticmethod
+    def get_cantidad_productos_vendidos_por_fecha(start_period, end_period):
+        response = Repository.get_cantidad_productos_vendidos_por_fecha(start_period, end_period)
+        if response.status_code != 200:
+            return {"cantidad_productos_vendidos": 0}
+        
+        json_response = json.loads(response.text)
+
+        assert('data' in json_response.keys())
+        assert('response' in json_response['data'].keys())
+        if json_response["data"]["response"][0]["count"] is None:
+            return {"cantidad_productos_vendidos":"0"}
+
+        return {
+            "cantidad_productos_vendidos": json_response["data"]["response"][0]["count"]
+        }
+    
+
+
     @staticmethod
     def load_products():
         response = Repository.get_products()
@@ -250,6 +270,8 @@ class DashboardController:
         
         assert('data' in json_response.keys())
         assert('response' in json_response['data'].keys())
+        if json_response["data"]["response"][0]["total"] is None:
+            return {"sales":"0"}
 
         return {
             "sales": json_response["data"]["response"][0]["total"]
