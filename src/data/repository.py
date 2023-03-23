@@ -70,10 +70,10 @@ class Repository:
     def get_most_selled_products():
         response = Provider.execute(Queries.get_most_selled_products())
         return response
-    
+    #obtiene el query que obtiene los porductos mas vendidos sobre fechas especificas rpm
     @staticmethod
-    def get_most_selled_products_by_date():
-        response = Provider.execute(Queries.get_most_selled_products_by_date())
+    def get_most_selled_products_by_date(start_period, end_period):
+        response = Provider.execute(Queries.get_most_selled_products_by_date(start_period, end_period))
         return response
     
     #obtiene el query que obtiene los datos sobre fechas especificas rpm

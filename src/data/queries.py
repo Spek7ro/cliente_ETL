@@ -164,20 +164,20 @@ class Queries:
     #Consulta que devuelve la decripcion de un producto y las veces que se ha vendido, 
     #   filtrado por un periodo especifico
     @staticmethod
-    def get_most_selled_products_by_date():
-        return """
-            {
-                var(func: has(date))@filter(ge(date, "2023-01-01") AND le(date, "2023-01-20")) {
-                    product: ~bought{
+    def get_most_selled_products_by_date(start_period, end_period):
+        return f"""
+            {{
+                var(func: has(date))@filter(ge(date, "{start_period}") AND le(date, "{end_period}")) {{ 
+                    product: ~bought{{ 
                         c as count(bought)
-                    } 
-                }
+                    }} 
+                }}
                 
-                response(func: has(description), orderdesc: val(c))  {
+                response(func: has(description), orderdesc: val(c))  {{ 
                     description
                     times: val(c)
-                }
-            }
+                }}
+            }}
         """
     
     #query que filtra los datos de las ventas hechas por los clientes para que se muestren solamente

@@ -221,8 +221,8 @@ class DashboardController:
     #Método que recorre el json creado por la consulta y 
     # agrega a una lista los productos y las veces que se ha vendido
     @staticmethod
-    def load_most_selled_products_by_date():
-        response = Repository.get_most_selled_products_by_date()
+    def load_most_selled_products_by_date(start_period,end_period):
+        response = Repository.get_most_selled_products_by_date(start_period,end_period)
         if response.status_code != 200:
             return []
         result = []
